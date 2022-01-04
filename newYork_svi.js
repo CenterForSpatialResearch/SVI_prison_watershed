@@ -611,6 +611,13 @@ function drawMap(data){//,outline){
        // maxBounds: maxBounds
 	 //  bearing: 28
     });
+    var hoverCountyID = null;
+    const geocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl
+    });
+ 
+    document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
   var hoverCountyID = null;
 
