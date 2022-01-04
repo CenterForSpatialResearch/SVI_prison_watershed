@@ -200,7 +200,7 @@ g.append("rect")
 //SECTION 2
 //2 datasets/loading
 // var counties = d3.json("NYCensusTract.geojson")
- var counties = d3.json("manhattan_watershed_tracts.geojson")
+ var counties = d3.json("nevada.geojson")
 var svi = d3.csv("SVINewYork2018_CensusTract.csv")
 
 
@@ -604,8 +604,8 @@ function drawMap(data){//,outline){
         style:"mapbox://styles/c4sr-gsapp/cky0d4wzt3aa614qidu6eqvlw",
 		
        // maxZoom:15,
-        zoom: 10,
-		    center:[-73.762,41.060],
+        zoom: 6,
+		    center:[-119.949823, 39.08278],
         preserveDrawingBuffer: true//,
         //minZoom:1//,
        // maxBounds: maxBounds
