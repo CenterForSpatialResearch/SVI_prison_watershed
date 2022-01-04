@@ -200,7 +200,7 @@ g.append("rect")
 //SECTION 2
 //2 datasets/loading
 // var counties = d3.json("NYCensusTract.geojson")
- var counties = d3.json("manhattan_watershed_tracts.geojson")
+ var counties = d3.json("newYork.geojson")
 var svi = d3.csv("SVINewYork2018_CensusTract.csv")
 
 
@@ -605,7 +605,7 @@ function drawMap(data){//,outline){
 		
        // maxZoom:15,
         zoom: 10,
-		    center:[-73.762,41.060],
+		    center:[ -74.26568012155158,42.00658922082426],
         preserveDrawingBuffer: true//,
         //minZoom:1//,
        // maxBounds: maxBounds
@@ -664,15 +664,14 @@ function drawMap(data){//,outline){
                   "data": geojson,//this is where we reference the geojson data from above
           },
           "layout": {//this is where we style the display- size the icons, show the labels etc. for placement and size
-                  "icon-image": "star",
-                  "icon-size": 0.1,
-                  "text-field": "some label",//uses the class field in the geojson file for our label
+                 
+                  "text-field": "Boiceville",//uses the class field in the geojson file for our label
                   "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
                   "text-offset": [0, 0.6],
                   "text-anchor": "top",
               },
               "paint":{//paint is used to define colors, etc.
-                  "text-color":"red"
+                  "text-color":"black"
               }
           },"hoverOutline");
 		  });

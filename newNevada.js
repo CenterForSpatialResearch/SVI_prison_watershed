@@ -12,6 +12,13 @@
 
 //SECTION 1
 //Setup variables, may still need some cleaning to get rid of unused ones
+var places = [
+	{name:"double negative",lng:-114.34400227179177,lat:36.617082030692075},
+	{name:"hoover dam",lat:36.016362539921204, lng:-114.73708513797703},
+		{name:"lake mead",lat:36.163229280156905, lng:-114.34286407463811},
+			{name:"moapa power plant",lat:36.5414365633447, lng:-114.72219888540866},
+]
+
 var map;
 var pub = {
     all:null,
@@ -657,6 +664,28 @@ function drawMap(data){//,outline){
              },
              "filter": ["!=", "E_TOTPOP", 0] // filter out no population
          },"hoverOutline")
+		 
+		 
+		 
+		 for(var p in places){
+		 	d3.select("#info").append("div").html(places[p].name)
+			 .style("border","1px solid black")
+			 .style("font-size","10px")
+			 .style("padding","3px")
+			 .style("margin","3px")
+		 	.attr("id",places[p].name.split(" ").join("_"))
+			 .attr("lat",places[p].lat)
+			 .attr("lng",places[p].lng)
+		 	.on("click",function(){
+		 		var placeId = d3.select(this).attr("id")
+				var lat = d3.select(this).attr("lat")
+				var lng = d3.select(this).attr("lng")
+				map.flyTo({
+					center:[lng,lat],
+					zoom:14
+				})
+		 	})
+		 }
 		 
      	//map.setFilter("counties",["==","stateAbbr","NY"])
         
