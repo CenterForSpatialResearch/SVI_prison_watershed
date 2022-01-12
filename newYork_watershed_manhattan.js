@@ -200,7 +200,7 @@ g.append("rect")
 //SECTION 2
 //2 datasets/loading
 // var counties = d3.json("NYCensusTract.geojson")
- var counties = d3.json("newYork.geojson")
+ var counties = d3.json("newYork_prisonTracts.geojson")
 var svi = d3.csv("SVINewYork2018_CensusTract.csv")
 
 
@@ -213,7 +213,7 @@ Promise.all([counties])
 
 function histo(data){
 	var countyCount =data.length
-	
+	var stateTotal = 4906
 	var key = "RPL_THEMES"
 	var width = 1000
 	var height = 380
@@ -264,14 +264,14 @@ function histo(data){
 	.attr("id",function(d,i){return "bin_"+i})
 	.attr("width",width/binsQ-2)
 	.attr("height",function(d){
-		console.log(d.length,countyCount,d.length/countyCount*100)
-		return y(d.length/countyCount*100)
+		//console.log(d.length,countyCount,d.length/countyCount*100)
+		return y(d.length/data.length*100)
 	})
 	.attr("x",function(d,i){
 		return barScale(i)+p/2
 	})
 	.attr("y",function(d){
-		return height-y(d.length/countyCount*100)-p/2
+		return height-y(d.length/data.length*100)-p/2
 	})
 	.attr('fill',function(d,i){
 	//	console.log(i, d.length)
@@ -285,8 +285,8 @@ function histo(data){
 //SECTION 3
 //main function after loading data - everything stems from the ready function right now
 function ready(counties){
-
-	//console.log(counties)
+//4906total in state
+	console.log(counties)
 	histo(counties.features)
 	//initial formatting of data
  //   var dataByFIPS = turnToDictFIPS(svi)
@@ -678,6 +678,7 @@ function drawMap(data){//,outline){
        // maxZoom:15,
          zoom: 6,
   		    center:[-75.762,43],
+		center:[-70,43],//prison
  //        preserveDrawingBuffer: true//,
         // zoom: 8.3,
  // 		    center:[-73.133,40.865],
@@ -738,8 +739,8 @@ function drawMap(data){//,outline){
 			 map.setFilter("hoverOutline",["==","FIPS",""])
 		  
       
-	//	 map.setLayoutProperty("prison-centroids-2ax8w5", 'visibility', 'none');
-	//	map.setLayoutProperty("prison-centroids-2ax8w5 (1)", 'visibility', 'none');
+		 map.setLayoutProperty("prison-centroids-2ax8w5", 'visibility', 'none');
+		map.setLayoutProperty("prison-centroids-2ax8w5 (1)", 'visibility', 'none');
 		 map.setLayoutProperty("reservations-centroids-ca25tw", 'visibility', 'none');
  		map.setLayoutProperty( "reservations-6tj1sa", 'visibility', 'none');
 		// map.setLayoutProperty("counties", 'visibility', 'none');

@@ -697,6 +697,45 @@ function drawMap(data){//,outline){
 
 	 // add a layer called counties from the geojson and
      map.on("load",function(){
+		 var allPrisonsVisible = true
+		 var closedPrisonsVisible = true
+		 
+		 var layers = map.getStyle().layers
+		 console.log(layers)
+		 var buttons = ["Closed Prisons","All Prisons"]
+		 var buttonsToLayers
+		 for(var b in buttons){
+		 	console.log(buttons[b])
+			 d3.select("#layers").append("div").html("show/hide "+buttons[b]).attr("id",buttons[b].split(" ").join("_"))
+			 .style('width',"100px").style("display","inline-block")
+			 .style("border","1px solid black")
+			 .style("padding","5px")
+			 .style("margin","5px")
+			 .style("cursor","pointer")
+		 }
+		 d3.select("#All_Prisons").style("background-color","red").on("click",function(){
+			 if(allPrisonsVisible==true){
+				 map.setLayoutProperty("prison-centroids-2ax8w5", 'visibility', 'none');
+				 map.setLayoutProperty("prison-centroids-2ax8w5 (1)", 'visibility', 'none');
+				 allPrisonsVisible=false
+			 }else{
+			 	map.setLayoutProperty("prison-centroids-2ax8w5", 'visibility', 'visible');
+				map.setLayoutProperty("prison-centroids-2ax8w5 (1)", 'visibility', 'visible');
+				allPrisonsVisible=true
+			 }
+		 })
+		 d3.select("#Closed_Prisons").style("background-color","gold").on("click",function(){
+			 if(closedPrisonsVisible==true){
+				 map.setLayoutProperty("closed", 'visibility', 'none');
+				 map.setLayoutProperty("closed_label", 'visibility', 'none');
+				 closedPrisonsVisible=false
+			 }else{
+			 	map.setLayoutProperty("closed", 'visibility', 'visible');
+				map.setLayoutProperty("closed_label", 'visibility', 'visible');
+				closedPrisonsVisible=true
+			 }
+		 })
+		 
 		 
 	d3.selectAll(".mapboxgl-ctrl-bottom-right").remove()
 		 

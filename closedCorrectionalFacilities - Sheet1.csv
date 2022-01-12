@@ -1,0 +1,21 @@
+facilityName,lat,lng,county,dateClosed,securityLevel,streetAddress,city,zipcode
+Butler ASACT Catchment Facility,,,Wayne,01/2011,Minimum,14001 Westbury Cutoff Rd,Red Creek,13143-0388
+Lyon Mountain Correctional,44.73123917171393,-73.90890314464775,Clinton,01/31/2011,Medium,3864 Route 374 ,Lyon Mountain,12952
+Buffalo Correctional,42.93220264962688,-78.54523370238162,Erie,10/2011,Minimum,3052 Wende Rd ,Alden,14004-0300 
+Fulton Correctional,40.836862827476864,-73.9006225072851,Bronx,10/2011,Minimum,1511 Fulton Avenue ,Bronx, 10457-8398
+Camp Georgetown,42.73034387524824,-75.78202535027766,Madison,10/2011,Minimum,3191 Crumb Hill Road,Georgetown,13072-9307
+Mid-Orange,41.27593597608176,-74.30219431620905,Orange,09/2011,Medium,900 Kings Highway ,Warwick,10990
+Oneida Correctional,43.18320947116911,-75.48234193189519,Oneida,10/2011,Medium,6100 School Road,Rome,13440
+Summit Shock Incarceration Correctional,42.56360074801232,-74.53715591477516,Schoharie,10/2011,Minimum,137 Eagle Heights Rd,Summit,12175
+Arthur Kill Correctional,40.549651251242565,-74.22854684330515,Richmond (Staten Island),12/2011,Medium,2911 Arthur Kill Rd,Staten Island,10309
+Bayview Correctional ,40.746647549139794,-74.00768647616795,New York (Manhattan),10/2012,Medium,550 West 20th Street,New York,10011-2678 
+Beacon Correctional,41.51970333502673,-73.96157327982952,Dutchess,09/2013,Female Minimum,21-59 Camp Beacon Road,Beacon,12508-0780
+Butler Correctional,43.21938931865724,-76.72410371826084,Wayne,07/26/2014,Medium,14003 Westbury Cut Off Road,Red Creek,13143-0388
+Chateaugay Correctional,44.925701226629,-74.05665440196253,Franklin,07/26/2014,Medium,7874 State Route 11 ,Chateaugay,12920-0320
+Monterey Shock Incarceration Correctional,42.33681005571105,-77.01866498706252,Schulyer,07/26/2014,Minimum,2150 Evergreen Hill Road,Beaver Dams,14812
+Mount McGregor Correctional,43.200643063044,-73.74815562288975,Saratoga,07/26/2014,Medium,1000 Mt. McGregor Road,Wilton,12831
+Lincoln Correctional,40.7977809045103,-73.95061478401229,New York (Manhattan),09/01/2019,Minimum,31-33 West 110th Street,New York,10026-4398
+Livingston Correctional,42.683362204088155,-77.82354105821561,Livingston ,09/01/2019,Medium,7005 Sonyea Rd,Sonyea,14556-0049 
+Clinton Annex at Clinton Correctional,44.723646908582474,-73.71593652519417,Clinton,03/31/2021,Maximum,1074 Rt. 374 ,Dannemora,12929
+Gowanda Correctional,42.48702346125375,-78.93596131114165,Erie,03/31/2021,Medium,South Road,Gowanda,14070-0350
+Watertown Correctional,43.92484643605106,-75.90898583361474,Jefferson,03/31/2021,Medium,23147 Swan Road,Watertown,13601-9340
