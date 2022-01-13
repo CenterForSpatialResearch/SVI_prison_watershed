@@ -704,37 +704,37 @@ function drawMap(data){//,outline){
 		 console.log(layers)
 		 var buttons = ["Closed Prisons","All Prisons"]
 		 var buttonsToLayers
-		 for(var b in buttons){
-		 	console.log(buttons[b])
-			 d3.select("#layers").append("div").html("show/hide "+buttons[b]).attr("id",buttons[b].split(" ").join("_"))
-			 .style('width',"100px").style("display","inline-block")
-			 .style("border","1px solid black")
-			 .style("padding","5px")
-			 .style("margin","5px")
-			 .style("cursor","pointer")
-		 }
-		 d3.select("#All_Prisons").style("background-color","red").on("click",function(){
-			 if(allPrisonsVisible==true){
-				 map.setLayoutProperty("prison-centroids-2ax8w5", 'visibility', 'none');
-				 map.setLayoutProperty("prison-centroids-2ax8w5 (1)", 'visibility', 'none');
-				 allPrisonsVisible=false
-			 }else{
-			 	map.setLayoutProperty("prison-centroids-2ax8w5", 'visibility', 'visible');
-				map.setLayoutProperty("prison-centroids-2ax8w5 (1)", 'visibility', 'visible');
-				allPrisonsVisible=true
-			 }
-		 })
-		 d3.select("#Closed_Prisons").style("background-color","gold").on("click",function(){
-			 if(closedPrisonsVisible==true){
-				 map.setLayoutProperty("closed", 'visibility', 'none');
-				 map.setLayoutProperty("closed_label", 'visibility', 'none');
-				 closedPrisonsVisible=false
-			 }else{
-			 	map.setLayoutProperty("closed", 'visibility', 'visible');
-				map.setLayoutProperty("closed_label", 'visibility', 'visible');
-				closedPrisonsVisible=true
-			 }
-		 })
+		 // for(var b in buttons){
+// 		 	console.log(buttons[b])
+// 			 d3.select("#layers").append("div").html("show/hide "+buttons[b]).attr("id",buttons[b].split(" ").join("_"))
+// 			 .style('width',"100px").style("display","inline-block")
+// 			 .style("border","1px solid black")
+// 			 .style("padding","5px")
+// 			 .style("margin","5px")
+// 			 .style("cursor","pointer")
+// 		 }
+// 		 d3.select("#All_Prisons").style("background-color","red").on("click",function(){
+// 			 if(allPrisonsVisible==true){
+// 				 map.setLayoutProperty("prison-centroids-2ax8w5", 'visibility', 'none');
+// 				 map.setLayoutProperty("prison-centroids-2ax8w5 (1)", 'visibility', 'none');
+// 				 allPrisonsVisible=false
+// 			 }else{
+// 			 	map.setLayoutProperty("prison-centroids-2ax8w5", 'visibility', 'visible');
+// 				map.setLayoutProperty("prison-centroids-2ax8w5 (1)", 'visibility', 'visible');
+// 				allPrisonsVisible=true
+// 			 }
+// 		 })
+// 		 d3.select("#Closed_Prisons").style("background-color","gold").on("click",function(){
+// 			 if(closedPrisonsVisible==true){
+// 				 map.setLayoutProperty("closed", 'visibility', 'none');
+// 				 map.setLayoutProperty("closed_label", 'visibility', 'none');
+// 				 closedPrisonsVisible=false
+// 			 }else{
+// 			 	map.setLayoutProperty("closed", 'visibility', 'visible');
+// 				map.setLayoutProperty("closed_label", 'visibility', 'visible');
+// 				closedPrisonsVisible=true
+// 			 }
+// 		 })
 		 
 		 
 	d3.selectAll(".mapboxgl-ctrl-bottom-right").remove()
@@ -818,11 +818,23 @@ function drawMap(data){//,outline){
 	  // })
 	  map.on("mouseleave","counties",function(){
 			 map.setFilter("hoverOutline",["==","FIPS",""])
+		  
 	  	
 	  })
-	   map.on('mousemove', 'counties', function(e) {
-	   	console.log(e)
+	   map.on('mousemove', 'prisons', function(e) {
+	   	console.log(e.features[0])
+		   var prison = e.features[0].properties
+		  prisonPopup = "<strong>Prison:</strong> "+prison.name+"<br>"
+		   +"<strong>County:</strong> "+prison.County+"<br>"
+		   +"<strong>Town:</strong> "+prison.Town+"<br>"
+		   +"<strong>Status:</strong> "+prison["open or closed"]+"<br>"
+		   +"<strong>Security Level:</strong> "+prison["Security Level"]+"<br>"
+		   +"<strong>Prison Since:</strong> "+prison["Prison Since"]
+		   d3.select("#prisonPopup").html(prisonPopup)
 	   })
+	   
+	   
+	   
      map.on('mousemove', 'counties', function(e) {
          var feature = e.features[0]
 		// console.log(feature)
@@ -848,8 +860,8 @@ function drawMap(data){//,outline){
              }
 
               d3.select("#mapPopup").style("visibility","visible")
-              .style("left",x+"px")
-              .style("top",y+"px")
+              // .style("left",x+"px")
+               .style("top","160px")
 			 
 			 var variableColorScale = d3.scaleLinear().domain([0,.5,1]).range(colors)
 			 
@@ -899,7 +911,7 @@ function drawMap(data){//,outline){
 
 		 //when mouseleaves, popup is hidden
          map.on("mouseleave",'counties',function(){
-             d3.select("#mapPopup").style("visibility","hidden")
+            // d3.select("#mapPopup").style("visibility","hidden")
          })
 
           });
