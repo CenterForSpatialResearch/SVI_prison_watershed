@@ -604,7 +604,7 @@ function drawMap(data){//,outline){
         style:"mapbox://styles/c4sr-gsapp/cky0d4wzt3aa614qidu6eqvlw",
 		
        // maxZoom:15,
-        zoom: 10,
+        zoom: 8,
 		    center:[ -74.26568012155158,42.00658922082426],
         preserveDrawingBuffer: true//,
         //minZoom:1//,
@@ -663,25 +663,25 @@ function drawMap(data){//,outline){
       
 	  
 	  
-      map.addLayer({
-          "id": "points",
-          "type": "symbol",
-          "source": {
-                  "type": "geojson",
-                  "data": geojson,//this is where we reference the geojson data from above
-          },
-          "layout": {//this is where we style the display- size the icons, show the labels etc. for placement and size
-                 
-                  "text-field": "Boiceville",//uses the class field in the geojson file for our label
-                  "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-                  "text-offset": [0, 0.6],
-                  "text-anchor": "top",
-              },
-              "paint":{//paint is used to define colors, etc.
-                  "text-color":"black"
-              }
-          },"hoverOutline");
-		  });
+      // map.addLayer({
+ //          "id": "points",
+ //          "type": "symbol",
+ //          "source": {
+ //                  "type": "geojson",
+ //                  "data": geojson,//this is where we reference the geojson data from above
+ //          },
+ //          "layout": {//this is where we style the display- size the icons, show the labels etc. for placement and size
+ //
+ //                  "text-field": "Boiceville",//uses the class field in the geojson file for our label
+ //                  "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+ //                  "text-offset": [0, 0.6],
+ //                  "text-anchor": "top",
+ //              },
+ //              "paint":{//paint is used to define colors, etc.
+ //                  "text-color":"black"
+ //              }
+ //          },"hoverOutline");
+ // 		  });
    
 	 //detects mouse on counties layer inorder to get data for where mouse is
 	  map.on("click","counties",function(e){

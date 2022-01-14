@@ -110,13 +110,39 @@
 			  background-color:#fff;
 			  padding:5px;
 			  width:240px;
-			  height:100px;
+			  height:130px;
 			  position:absolute;
 		  }
 		  #mapPopup{
 			  visibility:visible;
 			  top:150px;
 			  height:200px;
+		  }
+		  #prisonKey{
+			  position:fixed;
+			  top:10px;
+			  right:10px;
+			  padding:10px;
+			  background-color:black;
+			  color:white;
+			  display:inline-block;
+		  }
+		  #open{
+			  background-color:green;
+		  }
+		  #closing{
+			  background-color:gold;
+		  }
+		  #closed{
+			  background-color:red;
+		  }
+		  .keyCircle{
+			  width:10px;
+			  height:10px;
+			  border-radius:5px;
+			  border:1px solid white;
+			  display:inline-block;
+			  margin:5px;
 		  }
 </style>
 
@@ -143,7 +169,11 @@
  <div id="rankings"></div>
 </div> -->
 
-<div id="layers"></div>
+<div id="prisonKey">
+	<div id="open" class="keyCircle"></div>open
+	<div id="closing" class="keyCircle"></div>closing
+	<div id="closed" class="keyCircle"></div>closed
+</div>
 <div id="map"></div>
 <div id="mapPopup"></div>
 <div id="prisonPopup"></div>
