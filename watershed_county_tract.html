@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>watershed and census geography</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+<script src="js/d3.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+<style>
+    #menu {
+        position: absolute;
+        z-index: 1;
+        top: 10px;
+        left: 10px;
+        border-radius: 3px;
+        width: 120px;
+        font-family: 'Open Sans', sans-serif;
+		background-color:rgba(0,0,0,.4);
+		color:white;
+		padding:5px;
+    }
+
+    #menu a {
+        font-size: 13px;
+        color: #000;
+        display: block;
+        margin: 0;
+        padding: 0;
+        padding: 10px;
+        text-decoration: none;
+		margin:5px;
+    }
+
+    #menu a:last-child {
+        border: none;
+    }
+
+    #menu a:hover {
+		background-color:rgba(255,255,255,.5);
+        color: #404040;
+    }
+
+    #menu a.active {
+        background-color: #000000;
+        color: #aaa;
+    }
+
+    #menu a.active:hover {
+		background-color:rgba(0,0,0,.8);
+    }
+	#title{
+		z-index:1;
+		background-color:black;
+		color:white;
+		padding:10px;
+	}
+	#map{
+		z-index:-1;
+	}
+</style>
+<!-- <div id="title">Boundaries: Watershed, Tracts, Counties</div> -->
+<nav id="menu">Boundary<br>Layers</nav>
+<div id="map"></div>
+
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoiYzRzci1nc2FwcCIsImEiOiJja2J0ajRtNzMwOHBnMnNvNnM3Ymw5MnJzIn0.fsTNczOFZG8Ik3EtO9LdNQ';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/c4sr-gsapp/ckyorc9ni0eod14qlfm134nb0',
+        zoom: 10.5,
+        center: [-74.236,41.884]
+    });
+
+    // Wait until the map has finished loading.
+    map.on('load', () => {
+		console.log(map.getStyle().layers)
+       
+    });
+
+    // After the last frame rendered before the map enters an "idle" state.
+    map.on('idle', () => {
+        // If these two layers were not added to the map, abort
+        // if (!map.getLayer( "tracts") || !map.getLayer("watershed")) {
+   //          return;
+   //      }
+
+        // Enumerate ids of the layers.
+        const toggleableLayerIds = ['county',"countyLabel", "tracts","watershed"];
+		
+        // Set up the corresponding toggle button for each layer.
+        for (const id of toggleableLayerIds) {
+            // Skip layers that already have a button set up.
+            if (document.getElementById(id)) {
+                continue;
+            }
+
+            // Create a link.
+            const link = document.createElement('a');
+            link.id = id;
+            link.href = '#';
+            link.textContent = id;
+            link.className = 'active';
+
+            // Show or hide layer when the toggle is clicked.
+            link.onclick = function (e) {
+                const clickedLayer = this.textContent;
+                e.preventDefault();
+                e.stopPropagation();
+
+                const visibility = map.getLayoutProperty(
+                    clickedLayer,
+                    'visibility'
+                );
+
+                // Toggle layer visibility by changing the layout object's visibility property.
+                if (visibility === 'visible') {
+                    map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                    this.className = '';
+                } else {
+                    this.className = 'active';
+                    map.setLayoutProperty(
+                        clickedLayer,
+                        'visibility',
+                        'visible'
+                    );
+                }
+            };
+
+            const layers = document.getElementById('menu');
+            layers.appendChild(link)
+			var colorDictionary = {
+				county:"#fff200",
+				countyLabel:"#fff200",
+				tracts:"#fff200",
+				watershed:"cyan"
+			}
+			for(var t in toggleableLayerIds){
+				var layerName = toggleableLayerIds[t]
+				d3.select("#"+layerName).style("color",colorDictionary[layerName])
+			}
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -655,14 +655,8 @@ function drawMap(data){//,outline){
              },
              "filter": ["!=", "E_TOTPOP", 0] // filter out no population
          },"hoverOutline")
-		 
      	//map.setFilter("counties",["==","stateAbbr","NY"])
-        
 			 map.setFilter("hoverOutline",["==","FIPS",""])
-		  
-      
-	  
-	  
       // map.addLayer({
  //          "id": "points",
  //          "type": "symbol",
@@ -699,15 +693,10 @@ function drawMap(data){//,outline){
 	  })
      map.on('mousemove', 'counties', function(e) {
          var feature = e.features[0]
-		// console.log(feature)
          map.getCanvas().style.cursor = 'pointer';
 
          if(feature["properties"].FIPS!=undefined){
-		 	// console.log(feature["properties"])
-			 
 			 map.setFilter("hoverOutline",["==","FIPS",feature["properties"].FIPS])
-
-			 //this section just sets the x and y of the popup
              var x = event.clientX+20;
              var y = event.clientY+20;
              var w = window.innerWidth;
@@ -720,13 +709,10 @@ function drawMap(data){//,outline){
              }else if(y-200<150){
                  y = 150
              }
-
               d3.select("#mapPopup").style("visibility","visible")
               .style("left",x+"px")
               .style("top",y+"px")
-			 
 			 var variableColorScale = d3.scaleLinear().domain([0,.5,1]).range(colors)
-			 
 			 var variableText = ""
 			 for(var a in pub.activeThemes){
 				 var key = pub.activeThemes[a]
@@ -738,10 +724,8 @@ function drawMap(data){//,outline){
 				 	variableText+="<span style=\"color:"+color+"\"><strong>HIGH "+displayKey+":</strong>"+value+"</span><br>"
 				 }else if(value<.2){
 				 	variableText+="<span style=\"color:"+color+"\"><strong>LOW "+displayKey+":</strong>"+value+"</span><br>"
-
 				 }
 			 }
-
             //this section sets the text content of the popup
             var locationName = feature["properties"]["LOCATION"].replace("New York County","Manhattan")
 			 .replace(", New York","").replace("Census","")
@@ -756,8 +740,6 @@ function drawMap(data){//,outline){
                       activeCount+=1
                  }
              }
-			 
-			 
 			 if(Math.round(activeTally*10000)/10000==0){
 	             displayString+="Not enough data for selected variables."
 	             d3.select("#mapPopup").html(displayString+"<br"+variableText)
@@ -768,10 +750,7 @@ function drawMap(data){//,outline){
 				 	+" out of "+ activeCount
 	             d3.select("#mapPopup").html(displayString+"<br>"+variableText)
 			 }
-             
          }
-
-		 //when mouseleaves, popup is hidden
          map.on("mouseleave",'counties',function(){
              d3.select("#mapPopup").style("visibility","hidden")
          })
