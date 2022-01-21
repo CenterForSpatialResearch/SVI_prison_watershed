@@ -3,7 +3,7 @@
 <head>
 
 	  <meta charset="UTF-8">
-    <title>New York</title>
+    <title>Nevada</title>
 
     <meta charset="UTF-8">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
@@ -47,7 +47,6 @@
 			width:10px;
 			border:1px solid #000;
 		}
-
 		/* When the checkbox is checked, add a blue background */
 	
 		/* Style the checkmark/indicator */
@@ -94,13 +93,6 @@
 			  background-color:black;
 			  padding:20px;
 		  }
-		  #chart{
-			  position:fixed;
-			  right:-10px;
-			  bottom:-10px;
-		  }
-		  #map{
-		  }
 </style>
 
 </head>
@@ -108,18 +100,51 @@
 <body>
 
 
-<div id="chart">
+<div id="nav">
+	<div id="title" class="menu">
+        Nevada
+		<br><br>
+				<div id="geocoder"></div>
+				<br>
+		
+		</div>
+		<div id="info">
+		<!-- The Social Vulnerability Index is a composite of the 15 Census variables listed below.
+		Each part of New York City has a different composition.
+		<br>
+		<br>
 
+		Toggling the vulnerability variables below reconfigures the SVI to include/exclude specific variables
+		and changes the vulnerability landscape of the city. -->
+		<!-- <div id="footerKeyText">Low to High SVI</div> -->
+		<!-- <br>
+		<i>Turning variables on/off to recalculate the SVI.</i></div> -->
+
+		</div>
+  <!-- <div id="allocationTitle" class="menu">
+  Click below to turn variables on and off
+  </div> -->
+  <!-- <div id="activeThemesText" > </div> -->
+  <div id = "measures">
+  </div>
+  
+  <div id="infoText" class="menu">
+
+    <!-- Columns used in this map have the prefixes below:<br>
+      EPL_ = Percentile percentage of each category<br>
+      SPL_THEME = sum of EPLs in each of the 4 themes<br>
+      SPL_THEMES = sum of all SPL THEMEs<br> -->
+  </div>
 
 </div>
-		<!-- <div id="key"></div> -->
+		<div id="key"></div>
 
 
 	<!-- <div id="footerKey"></div> -->
 
 
 
-<!-- <div id="rankingsTitle">
+<!--<div id="rankingsTitle">
 	 <div id="activeThemesText" > </div>
 <div id="high"><span class="subtitle"><br>Census tracts with highest SVI</span></div>
 <div id="low"><span class="subtitle"><br>Census tracts with lowest SVI</span></div>
@@ -134,7 +159,7 @@
 
 
 <script type="text/javascript" src="centroids.js"></script>
-<script type="text/javascript" src="newYork_watershed_manhattan.js"></script>
+<script type="text/javascript" src="SVI_toggle_NewYork.js"></script>
 
 
 </body>

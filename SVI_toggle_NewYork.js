@@ -12,6 +12,12 @@
 
 //SECTION 1
 //Setup variables, may still need some cleaning to get rid of unused ones
+var places = [
+	{name:"Ulster County",lat:41.887,lng:-74.251},
+	{name:"Manhattan",lat:40.780,lng:-73.947},
+	{name:"Boiceville",lat:42.00783288016468,lng: -74.26731090340138}
+]
+
 var map;
 var pub = {
     all:null,
@@ -200,7 +206,7 @@ g.append("rect")
 //SECTION 2
 //2 datasets/loading
 // var counties = d3.json("NYCensusTract.geojson")
- var counties = d3.json("watershed_0.geojson")
+ var counties = d3.json("newYork.geojson")
 var svi = d3.csv("SVINewYork2018_CensusTract.csv")
 
 
@@ -211,83 +217,11 @@ Promise.all([counties])
 })
 //END SECTION 2 ////////////////////////////////////////////////////////
 
-function histo(data){
-	var countyCount =data.length
-	var stateTotal = 4906
-	var key = "RPL_THEMES"
-	var width = 1000
-	var height = 380
-	var binsQ = 100
-	var p = 160
-	var yMax = 10
-	var x = d3.scaleLinear().domain([0,1]).range([0,width-p])
-	var barScale = d3.scaleLinear().domain([0,binsQ]).range([0,width-p])
-	var y = d3.scaleLinear().domain([0,yMax]).range([0,height-p])
-	var yReverse = d3.scaleLinear().domain([yMax,0]).range([0,height-p])
-	var c = d3.scaleLinear().domain([0,binsQ*.2,binsQ/2,binsQ*.8,binsQ]).range([colors[0],colors[0],colors[1],colors[2],colors[2]])
-	var svg =d3.select("#chart").append("svg")
-	.attr("width",width)
-	.attr("height",height)
-	
-	var histogram = d3.histogram()
-	    .value(function(d) { return parseFloat(d["properties"][key]); })   // I need to give the vector of value
-	    .domain(x.domain())  // then the domain of the graphic
-	    .thresholds(binsQ); // then the numbers of bins
-
-	// And apply this function to data to get the bins
-	var bins = histogram(data);
-	console.log(bins.length)
-
-	svg.append("text").text("Low SVI Percentile").attr("x",p/2).attr("y",height-p/4).attr('fill',"white")
-	svg.append("text").text("High SVI Percentile").attr("x",width-p/2).attr("y",height-p/4).attr('fill',"white").attr("text-anchor","end")
-	svg.append("text").text("% of Tracts").attr("x",0).attr("y",height/2).attr('fill',"white")
-
-	var xAxis= d3.axisBottom(x)
-	var yAxis= d3.axisLeft(yReverse)
-	 svg.append("g")
-	            .attr("transform", "translate("+p/2+","+(height-p/2+1)+")")
-	            .call(xAxis.ticks(16))
-	 svg.append("g")
-	            .attr("transform", "translate("+p/2+","+p/2+")")
-	            .call(yAxis.ticks(4))
-
-	d3.selectAll(".tick").style('stroke',"white")
-	d3.selectAll("line").attr('stroke',"white")
-	d3.selectAll(".tick").style('fill',"white")
-	d3.selectAll(".domain").style('stroke',"white")
-	console.log(bins)
-
-	svg.selectAll(".bars")
-	.data(bins)
-	.enter()
-	.append("rect")
-	.attr("id",function(d,i){return "bin_"+i})
-	.attr("width",width/binsQ-2)
-	.attr("height",function(d){
-		//console.log(d.length,countyCount,d.length/countyCount*100)
-		return y(d.length/data.length*100)
-	})
-	.attr("x",function(d,i){
-		return barScale(i)+p/2
-	})
-	.attr("y",function(d){
-		return height-y(d.length/data.length*100)-p/2
-	})
-	.attr('fill',function(d,i){
-	//	console.log(i, d.length)
-		return c(i)
-	})
-	
-	
-}
-
 
 //SECTION 3
 //main function after loading data - everything stems from the ready function right now
 function ready(counties){
-//4906total in state
-	console.log(counties)
-	histo(counties.features)
+
 	//initial formatting of data
  //   var dataByFIPS = turnToDictFIPS(svi)
     var tallied = combineGeojson(counties)
@@ -676,13 +610,9 @@ function drawMap(data){//,outline){
         style:"mapbox://styles/c4sr-gsapp/cky0d4wzt3aa614qidu6eqvlw",
 		
        // maxZoom:15,
-         zoom: 9,
-  		    center:[-73.632,41.131],
-		//center:[-70,43],//prison
- //        preserveDrawingBuffer: true//,
-        // zoom: 8.3,
- // 		    center:[-73.133,40.865],
-      //  preserveDrawingBuffer: true//,
+        zoom: 7,
+		    center:[-74.251,42.291],
+        preserveDrawingBuffer: true//,
         //minZoom:1//,
        // maxBounds: maxBounds
 	 //  bearing: 28
@@ -694,14 +624,17 @@ function drawMap(data){//,outline){
   mapboxgl: mapboxgl
   });
  
-  // document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+  document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
 	 // add a layer called counties from the geojson and
      map.on("load",function(){
 		 
-	d3.selectAll(".mapboxgl-ctrl-bottom-right").remove()
+		 console.log(map.getStyle().layers)
+		          //
+         map.setLayoutProperty("prisons", 'visibility','none');
+         map.setLayoutProperty("newyork-watershed-4att2i", 'visibility','none');
 		 
-       // map.addControl(new mapboxgl.NavigationControl(),'bottom-right');
+        map.addControl(new mapboxgl.NavigationControl(),'bottom-right');
         map.dragRotate.disable();
         map.addSource("counties",{
              "type":"geojson",
@@ -734,50 +667,35 @@ function drawMap(data){//,outline){
              "filter": ["!=", "E_TOTPOP", 0] // filter out no population
          },"hoverOutline")
 		 
+		 
+		 
+		 for(var p in places){
+		 	d3.select("#info").append("div").html(places[p].name)
+			 .style("border","1px solid black")
+			 .style("font-size","10px")
+			 .style("padding","3px")
+			 .style("margin","3px")
+		 	.attr("id",places[p].name.split(" ").join("_"))
+			 .attr("lat",places[p].lat)
+			 .attr("lng",places[p].lng)
+		 	.on("click",function(){
+		 		var placeId = d3.select(this).attr("id")
+				var lat = d3.select(this).attr("lat")
+				var lng = d3.select(this).attr("lng")
+				map.flyTo({
+					center:[lng,lat],
+					zoom:14
+				})
+		 	})
+		 }
+		 
      	//map.setFilter("counties",["==","stateAbbr","NY"])
         
 			 map.setFilter("hoverOutline",["==","FIPS",""])
 		  
       
-		 map.setLayoutProperty("prison-centroids-2ax8w5", 'visibility', 'none');
-		map.setLayoutProperty("prison-centroids-2ax8w5 (1)", 'visibility', 'none');
-		 map.setLayoutProperty("reservations-centroids-ca25tw", 'visibility', 'none');
- 		map.setLayoutProperty( "reservations-6tj1sa", 'visibility', 'none');
-		// map.setLayoutProperty("counties", 'visibility', 'none');
-		 map.setLayoutProperty("newyork-watershed-4att2i", 'visibility', 'none');
-	  
-	  
-      // map.addLayer({
-  //         "id": "points",
-  //         "type": "symbol",
-  //         "source": {
-  //                 "type": "geojson",
-  //                 "data": geojson,//this is where we reference the geojson data from above
-  //         },
-  //         "layout": {//this is where we style the display- size the icons, show the labels etc. for placement and size
-  //                 "icon-image": "star",
-  //                 "icon-size": 0.1,
-  //                 "text-field": "some label",//uses the class field in the geojson file for our label
-  //                 "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-  //                 "text-offset": [0, 0.6],
-  //                 "text-anchor": "top",
-  //             },
-  //             "paint":{//paint is used to define colors, etc.
-  //                 "text-color":"red"
-  //             }
-  //         },"hoverOutline");
   		  });
    
-	 //detects mouse on counties layer inorder to get data for where mouse is
-	  // map.on("click","counties",function(e){
-	  // 	var fips = e.features[0]["properties"].FIPS
-	  // 		  map.setFilter(hoverOUtline,["==","FIPS",fips])
-	  // 		 var centroid = centroids[fips]
-	  // 		  map.flyTo({
-	  // 		 	 center: centroid,
-	  // 			  zoom:13
-	  // 		  });
-	  // })
 	  map.on("mouseleave","counties",function(){
 			 map.setFilter("hoverOutline",["==","FIPS",""])
 	  	
